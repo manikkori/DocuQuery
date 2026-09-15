@@ -12,3 +12,25 @@ const storage = multer.diskStorage({
         cb(null, uniqueSuffix + '-' + file.originalname);
     }
 });
+
+const fileFilter = (req, file, cb)=>{
+    const  allowedMimetypes = [
+        "application/pdf",                                                                 // .pdf
+        "text/plain",                                                                      // .txt
+        "application/msword",                                                              // .doc
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document"          // .docx
+    ];
+
+    if(allowedMimetypes.includes(file.mimetype)){
+        cb(null, true);
+    }
+    else{
+        cb(new Error("Invalid File type!", false));
+    }
+};
+
+export const upload = multer({
+    storage,
+    fileFilter,
+    limits: {fileSize:15*1024*1024}
+})
