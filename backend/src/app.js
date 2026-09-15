@@ -9,6 +9,8 @@ app.use(cors())
 app.use(express.json({limit:"50mb"}));
 app.use(express.urlencoded({extended:true, limit:"50mb"}));
 
+import documentRoute from './routes/document.routes.js';
+
 
 
 app.get('/api/health', (req, res)=>{
@@ -18,5 +20,9 @@ app.get('/api/health', (req, res)=>{
         message:"DocuQuery Backend is running!"
     })
 })
+
+
+app.use('./api/docs', documentRoute)
+
 
 export default app;
